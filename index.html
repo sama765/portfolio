@@ -66,6 +66,7 @@
   ::selection{background:var(--clay); color:var(--paper);}
 
   .wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+  @media (max-width:480px){ .wrap{padding:0 18px;} }
 
   a{color:inherit;}
 
@@ -88,6 +89,7 @@
     max-width:var(--max); margin:0 auto; padding:16px 28px;
     display:flex; align-items:center; justify-content:space-between;
   }
+  @media (max-width:480px){ .topbar-inner{padding:14px 18px;} }
   .brand{
     font-family:'IBM Plex Mono', monospace;
     font-size:14px; letter-spacing:.03em;
@@ -101,12 +103,40 @@
   nav.topnav a:hover{opacity:1; color:var(--clay);}
   @media (max-width:640px){ nav.topnav{display:none;} }
 
+  /* ---------- Mobile nav (hamburger) ---------- */
+  .nav-toggle{
+    display:none;
+    width:36px; height:36px; align-items:center; justify-content:center;
+    background:none; border:1px solid var(--line); border-radius:6px; cursor:pointer; color:var(--ink); padding:0;
+  }
+  .nav-toggle svg{width:19px; height:19px;}
+  .nav-toggle .bar{transition:transform .2s ease, opacity .2s ease; transform-origin:center;}
+  .nav-toggle.is-active .bar-top{transform:translateY(5px) rotate(45deg);}
+  .nav-toggle.is-active .bar-mid{opacity:0;}
+  .nav-toggle.is-active .bar-bot{transform:translateY(-5px) rotate(-45deg);}
+  @media (max-width:640px){ .nav-toggle{display:flex;} }
+  .mobile-nav{
+    display:none;
+    flex-direction:column;
+    max-width:var(--max); margin:0 auto;
+    border-top:1px solid var(--line);
+  }
+  .mobile-nav.is-open{display:flex;}
+  .mobile-nav a{
+    font-family:'IBM Plex Mono', monospace; font-size:14.5px; letter-spacing:.02em;
+    color:var(--ink); text-decoration:none;
+    padding:15px 28px; border-bottom:1px solid var(--line-soft);
+  }
+  .mobile-nav a:last-child{border-bottom:none;}
+  .mobile-nav a:active, .mobile-nav a:hover{color:var(--clay);}
+
   /* ---------- Hero ---------- */
   .hero{
     padding:96px 0 80px;
     position:relative;
     overflow:hidden;
   }
+  @media (max-width:640px){ .hero{padding:76px 0 56px;} }
   .hero .wrap{position:relative; z-index:2;}
   .compass{
     position:absolute;
@@ -176,6 +206,7 @@
 
   /* ---------- Section shell ---------- */
   section{padding:78px 0;}
+  @media (max-width:640px){ section{padding:52px 0;} }
   .section-head{
     display:flex; align-items:baseline; justify-content:space-between;
     border-bottom:1px solid var(--line);
@@ -302,6 +333,10 @@
   }
   .plate-body{padding:30px 26px 34px;}
   .plate-desc{max-width:70ch; font-size:15.5px; color:var(--ink); margin:0 0 22px;}
+  @media (max-width:480px){
+    .plate-head{padding:18px 18px;}
+    .plate-body{padding:22px 18px 26px;}
+  }
   .plate-tags{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px;}
   .tag{
     font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.04em;
@@ -349,6 +384,19 @@
     padding:20px 26px; border-top:1px solid var(--line);
   }
   .cert-row:first-child{border-top:none;}
+  @media (max-width:640px){
+    .cert-row{
+      grid-template-columns:34px 1fr;
+      grid-template-areas:"seal main" "meta meta" "view view";
+      row-gap:10px; padding:18px 20px;
+    }
+    .cert-row .cert-seal{grid-area:seal;}
+    .cert-row .cert-main{grid-area:main;}
+    .cert-row .cert-meta{grid-area:meta; text-align:left; padding-left:50px;}
+    .cert-row .cert-view{grid-area:view; justify-self:start; margin-left:50px;}
+    html[dir="rtl"] .cert-row .cert-meta{text-align:right; padding-left:0; padding-right:50px;}
+    html[dir="rtl"] .cert-row .cert-view{justify-self:end; margin-left:0; margin-right:50px;}
+  }
   .cert-main{min-width:0;}
   .cert-name{font-family:'Fraunces', serif; font-size:1.1rem; color:var(--ink); margin:0 0 4px;}
   .cert-issuer{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--sage-dark);}
@@ -372,6 +420,7 @@
     position:relative; overflow:hidden;
     border-top:1px solid var(--line);
   }
+  @media (max-width:640px){ .contact-band{padding:56px 0;} }
   .contact-band .wrap{position:relative; z-index:2;}
   .contact-band .section-label{color:var(--sage-dark);}
   .contact-band h2.section-title{color:var(--ink);}
@@ -517,8 +566,18 @@
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2.5 12h2.6M18.9 12h2.6M4.2 19.8l1.8-1.8M18 6l1.8-1.8" stroke-linecap="round"/></svg>
       </button>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language" title="العربية">Ar</button>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path class="bar bar-top" d="M4 7h16"/><path class="bar bar-mid" d="M4 12h16"/><path class="bar bar-bot" d="M4 17h16"/></svg>
+      </button>
     </div>
   </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#about" data-i18n="nav.about">About</a>
+    <a href="#skills" data-i18n="nav.skills">Skills</a>
+    <a href="#work" data-i18n="nav.work">Projects</a>
+    <a href="#training" data-i18n="nav.training">Training</a>
+    <a href="#contact" data-i18n="nav.contact">Contact</a>
+  </nav>
 </header>
 
 <div id="top"></div>
@@ -921,6 +980,24 @@
 </div>
 
 <script>
+  // ---- Mobile nav (hamburger) ----
+  const navToggle = document.getElementById('navToggle');
+  const mobileNav = document.getElementById('mobileNav');
+  if(navToggle && mobileNav){
+    navToggle.addEventListener('click', ()=>{
+      const isOpen = mobileNav.classList.toggle('is-open');
+      navToggle.classList.toggle('is-active', isOpen);
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    mobileNav.querySelectorAll('a').forEach(a=>{
+      a.addEventListener('click', ()=>{
+        mobileNav.classList.remove('is-open');
+        navToggle.classList.remove('is-active');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
   // ---- Fullscreen image lightbox (title bar + zoom/pan) ----
   const lightbox = document.getElementById('lightbox');
   const lightboxStage = document.getElementById('lightboxStage');
